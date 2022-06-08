@@ -1,0 +1,70 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <clocale>
+#include <random>
+
+int main() {
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<int> uni(0, 1);
+    srand(time(NULL));
+    setlocale(LC_ALL, "rus");
+    const int variants_count = 2;
+    const char* strs[variants_count] = { "О","Р" };
+    std::cout << "Сколько раз бросаем?" << std::endl;
+    std::cout << "---> ";
+    int n, orel = 0, reshka = 0, orelmax = 0, reshkamax = 0, orels = 0, reshkas = 0;
+    std::cin >> n;
+    if (n <= 0) {
+        for (int i = 0; i < 10; ++i) {
+            std::cout << "ЭЭЭ БЛЯ";
+            for (int k = 0; k < i; k++) {
+                std::cout << "Я";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << "ТАК НЕЛЬЗЯ!" << std::endl;
+        for (int i = 10; i > 0; i--) {
+            std::cout << "ЭЭЭ БЛЯ";
+            for (int k = 0; k < i - 1; k++) {
+                std::cout << "Я";
+            }
+            std::cout << std::endl;
+        }
+        system("pause");
+    }
+    else if (n == 1) {
+        int r = uni(rng);
+        if (r == 0)
+            std::cout << "Выпал орёл.";
+        else
+            std::cout << "Выпала решка.";
+    }
+    else {
+        for (int i = 0; i < n; ++i) {
+            int r = uni(rng);
+            if (n < 25) {
+                std::cout << strs[r];
+            }
+            if (r == 0) {
+                orel += 1;
+                reshkas = 0;
+                orels += 1;
+                if (orels > orelmax)
+                    orelmax = orels;
+            }
+            else {
+                reshka += 1;
+                orels = 0;
+                reshkas += 1;
+                if (reshkas > reshkamax)
+                    reshkamax = reshkas;
+            }
+        }
+
+        std::cout << std::endl;
+        std::cout << "Орёл выпал " << orel << " раз.\nРешка выпала " << reshka << " раз." << std::endl;
+        std::cout << "Максимальное кол-во раз, выпадения подряд орла  ==> " << orelmax << "\nМаксимальное кол-во раз, выпадения подряд решки ==> " << reshkamax << std::endl;
+    }
+    }
